@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
-import AppDataSource from "../data-source";
-import { Doctor } from "../entities/doctor.entitie";
-import { IDoctorRegister } from "../interface/doctor";
+import AppDataSource from "../../data-source";
+import { Doctor } from "../../entities/doctor.entitie";
+import { IDoctorRegister } from "../../interface/doctor";
 
 const registerDoctorService = async ({
   name,

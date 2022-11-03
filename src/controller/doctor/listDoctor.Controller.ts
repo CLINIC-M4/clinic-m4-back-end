@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import listDoctorService from "../service/listDoctor.Service";
+import listDoctorService from "../../services/doctor/listDoctor.Service";
 
 const listDoctorController = async (req: Request, res: Response) => {
   try {

@@ -25,7 +25,7 @@ export class Doctor {
   @Column({ length: 100, unique: true, nullable: false })
   crm: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false }) //verificar alguma configuração, talvez em string para adicionar números grandes(com DDD)
   telephone: number;
 
   @Column({ length: 100, nullable: false })
