@@ -6,7 +6,6 @@ import updatedUserController from "../../controller/user/userPatch.controller";
 import ensureAuthMiddleware from "../../middleware/ensureAuth.middlewares";
 import verifyIsAdmMiddleware from "../../middleware/verifyIsAdm.middleware";
 
-export const loginRouter = Router();
 const router = Router();
 
 router.post("", createUserController);

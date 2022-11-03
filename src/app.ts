@@ -2,14 +2,13 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import { appError } from "./errors/appError";
-import usersRouter from "./routes/users/user.routes"
-import loginRouter from "./routes/users/login.routes"
-
+import { initializerRouter } from "./routes/";
 
 const app = express();
+
 app.use(express.json());
-app.use("/users", usersRouter)
-app.use("/login", loginRouter);
+
+initializerRouter(app);
 
 app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
     if (err instanceof appError) {
