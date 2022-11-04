@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { User } from "./user.entity";
-import { Doctor } from "./doctor.entitie";
+import { Doctor } from "./doctor.entity";
 import { TipoExame } from "./exames.entity";
 
 @Entity("ExamesUserDoctor")

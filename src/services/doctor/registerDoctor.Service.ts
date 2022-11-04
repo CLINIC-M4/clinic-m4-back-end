@@ -1,13 +1,12 @@
 import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
-import { Doctor } from "../../entities/doctor.entitie";
-import { IDoctorRegister } from "../../interface/doctor";
+import { Doctor } from "../../entities/doctor.entity";
+import { IDoctorRegister } from "../../interfaces/doctor/doctor";
 
 const registerDoctorService = async ({
   name,
   email,
   crm,
-  telephone,
   password,
 }: IDoctorRegister): Promise<IDoctorRegister> => {
   const doctorRepository = AppDataSource.getRepository(Doctor);
@@ -18,7 +17,6 @@ const registerDoctorService = async ({
     name,
     email,
     crm,
-    telephone,
     password: encrypt,
   });
 
