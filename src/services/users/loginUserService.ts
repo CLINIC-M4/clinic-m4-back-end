@@ -15,15 +15,15 @@ const userLoginService = async ({ email, password }: IUserLogin) => {
   if (!bycrypt.compareSync(password, account.password!)) {
     throw new Error("Wrong email/password");
   }
-console.log(account)
+  console.log(account);
   const token = jwt.sign(
     {
       isAdm: account.isAdm,
       id: account.id,
-      isActive: account.isActive
+      isActive: account.isActive,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h" }
+    { expiresIn: "24h"}
   );
 
   return token;
