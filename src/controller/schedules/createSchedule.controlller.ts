@@ -5,9 +5,9 @@ import createScheduleService from "../../services/schedules/createSchedule.servi
 const createScheduleController = async (req: Request, res: Response) => {
   const infoSchedule: IScheduleRequest = req.body;
   const userId = req.user.id;
-  await createScheduleService(infoSchedule, userId);
+  const schedule = await createScheduleService(infoSchedule, userId);
 
-  return res.status(201).json({ message: "Created schedule" });
+  return res.status(201).json({ message: "Created schedule", schedule: schedule });
 };
 
 export { createScheduleController };

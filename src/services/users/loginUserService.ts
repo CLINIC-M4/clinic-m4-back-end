@@ -8,18 +8,12 @@ import jwt from "jsonwebtoken";
 const userLoginService = async ({ email, password }: IUserLogin) => {
   const userRepository = AppDataSource.getRepository(User);
   const account = await userRepository.findOneBy({ email });
-
-  // const doctorRepository = AppDataSource.getRepository(Doctor)
-  // const doctorAccount = await doctorRepository.findOneBy({ email })
+  if(account?.isActive === false){
+    throw new Error("This account was deleted")
+  }
   if (!account) {
     throw new Error("Wrong email/password");
   }
-  // if(!doctorAccount){
-  //   throw new Error("Wrong email/password");
-  // }
-  // if(!bycrypt.compareSync(password,doctorAccount.password!)){
-  //   throw new Error("Wrong email/password");
-  // }
 
   if (!bycrypt.compareSync(password, account.password!)) {
     throw new Error("Wrong email/password");
