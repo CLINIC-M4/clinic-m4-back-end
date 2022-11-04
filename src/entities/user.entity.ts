@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
+
 import { Exclude } from "class-transformer";
 import { Schedule } from "./schedule.entity";
 
@@ -22,9 +23,9 @@ export class User {
   @Column({ length: 150 })
   @Exclude()
   password: string;
-  @Column({default:true})
-  isActive:boolean
-  @Column({nullable: true, default:false})
+  @Column({ default: true })
+  isActive: boolean;
+  @Column({ nullable: false, default: false })
   isAdm: boolean;
   @CreateDateColumn()
   createdAt: Date;
