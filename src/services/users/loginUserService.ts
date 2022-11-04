@@ -4,7 +4,6 @@ import { User } from "../../entities/user.entity";
 import { IUserLogin } from "../../interfaces/users";
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Doctor } from "../../entities/doctor.entitie";
 
 const userLoginService = async ({ email, password }: IUserLogin) => {
   const userRepository = AppDataSource.getRepository(User);
@@ -29,10 +28,10 @@ const userLoginService = async ({ email, password }: IUserLogin) => {
     {
       isAdm: account.isAdm,
       id: account.id,
-      isActive: account.isActive
+      isActive: account.isActive,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h" }
+    { expiresIn: "24h"}
   );
 
   return token;
