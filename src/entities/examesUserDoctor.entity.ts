@@ -15,7 +15,7 @@ class ExamesUserDoctor {
   id: string;
 
   @ManyToOne(() => User)
-  user_id: User;
+  user_id: String;
 
   @ManyToOne(() => Doctor)
   doctor_id: Doctor;
