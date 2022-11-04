@@ -2,20 +2,27 @@ import { DataSource } from "typeorm";
 import "dotenv/config";
 
 const AppDataSource = new DataSource(
-  process.env.NODE_ENV === "test"
+  // Ambiente de execução default, verificar arquivo .env para modificações no ambientes de produção ou desenvolvimento.
+  process.env.NODE_EXECUTION === "develop"
     ? {
-        type: "sqlite",
-        database: ":memory:",
-        synchronize: true,
+        type: "postgres",
+        host: process.env.DEVELOP_DB_HOST,
+        port: 5432,
+        username: process.env.DEVELOP_DB_USER,
+        password: process.env.DEVELOP_DB_PASSWORD,
+        database: process.env.DEVELOP_DB,
+        logging: true,
+        synchronize: false,
         entities: ["src/entities/*.ts"],
+        migrations: ["src/migrations/*.ts"],
       }
     : {
         type: "postgres",
-        host: process.env.HOST,
+        host: process.env.PRIVAT_DB_HOST,
         port: 5432,
-        username: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB,
+        username: process.env.PRIVAT_DB_USER,
+        password: process.env.PRIVAT_DB_PASSWORD,
+        database: process.env.PRIVAT_DB,
         logging: true,
         synchronize: false,
         entities: ["src/entities/*.ts"],
