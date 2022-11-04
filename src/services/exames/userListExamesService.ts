@@ -1,19 +1,15 @@
 import AppDataSource from "../../data-source";
 import { appError } from "../../errors/appError";
 import { ExamesUserDoctor } from "../../entities/examesUserDoctor.entity";
-import { IExames } from "../../interfaces/exames/exames";
 
-const userListExamesService = async (
-  id: string,
-  idUser: String
-): Promise<IExames[]> => {
-  const sameId = id == idUser;
-
-  if (!sameId) {
-    throw new appError(400, "Exam not found.");
-  }
+const userListExamesService = async (id: string, idUser: String) => {
   const examRepository = AppDataSource.getRepository(ExamesUserDoctor);
-  const exames = await examRepository.findBy({ id });
+
+  const exames = await examRepository.findOneBy({ id });
+
+  if (idUser != exames?.user_id) {
+    throw new appError(400, "Exam imcompatible with User");
+  }
   if (exames == null || exames == undefined || !exames) {
     throw new appError(400, "Exam not found.");
   }
