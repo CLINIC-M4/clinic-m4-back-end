@@ -8,7 +8,9 @@ import { IDoctorLogin } from "../../interfaces/doctor/doctor";
 const doctorLoginService = async ({ email, password }: IDoctorLogin) => {
   const userRepository = AppDataSource.getRepository(Doctor);
   const doctorAccount = await userRepository.findOneBy({ email });
-
+  if(doctorAccount?.isActive === false){
+    throw new Error("This account was deleted")
+  }
   if (!doctorAccount) {
     throw new Error("Wrong email/password");
   }
