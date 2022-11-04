@@ -12,6 +12,15 @@ export interface IDoctorLogin{
   password: string
 }
 
+export interface IDoctorUpdate {
+  name?: string
+  email?: string
+  password?: string
+  isActive?:boolean
+  isAdm?:boolean
+  id?: string
+}
+
 export interface IDoctorRegister {
   name: string;
   email: string;
