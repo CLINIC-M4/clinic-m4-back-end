@@ -2,7 +2,7 @@ import "dotenv/config";
 import AppDataSource from "../../data-source";
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Doctor } from "../../entities/doctor.entitie";
+import { Doctor } from "../../entities/doctor.entity";
 import { IDoctorLogin } from "../../interfaces/doctor/doctor";
 
 const doctorLoginService = async ({ email, password }: IDoctorLogin) => {

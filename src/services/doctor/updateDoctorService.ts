@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import { hash } from "bcryptjs";
 import { appError } from "../../errors/appError";
-import { Doctor } from "../../entities/doctor.entitie";
+import { Doctor } from "../../entities/doctor.entity";
 import { IDoctorUpdate } from "../../interfaces/doctor/doctor";
 
 const updateDoctorService = async (id: string, newData: IDoctorUpdate) => {
