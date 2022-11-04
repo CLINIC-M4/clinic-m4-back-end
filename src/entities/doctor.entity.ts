@@ -10,8 +10,9 @@ import {
 } from "typeorm";
 
 import { v4 as uuid } from "uuid";
+import { Schedule } from "./schedule.entity";
 
-@Entity("doctor")
+@Entity("doctors")
 export class Doctor {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -36,6 +37,9 @@ export class Doctor {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Schedule, (schedule) => schedule.doctor)
+  schedule: Schedule[];
 
   //   @OneToMany(() => Address, (address) => address.id)
   //   address: string;
