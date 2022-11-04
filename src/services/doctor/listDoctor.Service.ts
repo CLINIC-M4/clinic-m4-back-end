@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { Doctor } from "../../entities/doctor.entitie";
-import { IDoctor } from "../../interface/doctor";
+import { IDoctor } from "../../interfaces/doctor/doctor";
 
 const listDoctorService = async (): Promise<IDoctor[]> => {
   const doctorRepository = AppDataSource.getRepository(Doctor);
