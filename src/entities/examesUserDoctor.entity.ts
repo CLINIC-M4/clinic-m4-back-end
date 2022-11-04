@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { User } from "./user.entity";
 import { Doctor } from "./doctor.entity";
-import { TipoExame } from "./exames.entity";
 
 @Entity("ExamesUserDoctor")
 class ExamesUserDoctor {
@@ -21,14 +20,17 @@ class ExamesUserDoctor {
   @ManyToOne(() => Doctor)
   doctor_id: Doctor;
 
-  @OneToMany(() => TipoExame, (tipoexame) => tipoexame.exames)
-  tipo_exame: TipoExame[];
+  @Column()
+  tipo_exame: String;
 
   @CreateDateColumn()
-  createdAt: Date;
+  data: Date;
 
   @Column()
   hora: string;
+
+  @Column()
+  resultado: String;
 }
 
 export { ExamesUserDoctor };

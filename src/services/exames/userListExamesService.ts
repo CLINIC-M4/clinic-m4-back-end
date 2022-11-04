@@ -1,11 +1,12 @@
 import AppDataSource from "../../data-source";
 import { appError } from "../../errors/appError";
-import { TipoExame } from "../../entities/exames.entity";
+import { ExamesUserDoctor } from "../../entities/examesUserDoctor.entity";
+import { IExames } from "../../interfaces/exames/exames";
 
-const userListExamesService = async (id: string) => {
-  const examRepository = AppDataSource.getRepository(TipoExame);
+const userListExamesService = async (id: string): Promise<IExames[]> => {
+  const examRepository = AppDataSource.getRepository(ExamesUserDoctor);
   const exames = await examRepository.findBy({ id });
-  if (exames == null) {
+  if (exames == null || exames == undefined || !exames) {
     throw new appError(400, "Exam not found.");
   }
   return exames;
