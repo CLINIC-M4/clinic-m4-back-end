@@ -17,9 +17,9 @@ const ensureAuthMiddleware = async(req:Request, res:Response, next:NextFunction)
        return res.status(401).json({message: error.message})
      }
     req.user = {
-      isAdm: decoded.isAdm,
+       isAdm: decoded.isAdm,
        id: decoded.id,
-      isActive:decoded.isActive
+       isActive:decoded.isActive
      }
     next()
     })

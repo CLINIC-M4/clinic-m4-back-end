@@ -23,7 +23,7 @@ export class User {
   password: string;
   @Column({default:true})
   isActive:boolean
-  @Column({nullable: false, default:false})
+  @Column({nullable: true, default:false})
   isAdm: boolean;
   @CreateDateColumn()
   createdAt: Date;

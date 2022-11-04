@@ -3,16 +3,18 @@ export interface IDoctor {
   name: string;
   email: string;
   crm: string;
-  telephone: number;
   password: string;
   createdAt: Date;
   updatedAt: Date;
+}
+export interface IDoctorLogin{
+  email: string
+  password: string
 }
 
 export interface IDoctorRegister {
   name: string;
   email: string;
   crm: string;
-  telephone: number;
   password: string;
 }
