@@ -12,8 +12,23 @@ import verifyIsAdmMiddleware from "../../middleware/verifyIsAdm.middleware";
 const router = Router();
 
 router.post("", verifyEmail, registerDoctorController);
-router.get("", ensureAuthMiddleware, verifyIsAdmMiddleware, listDoctorController);
-router.patch("/:id", ensureAuthMiddleware, verifyIsAdmMiddleware, doctorUpdateController)
-router.delete("/:id", ensureAuthMiddleware, verifyIsAdmMiddleware, deleteDoctorController)
+router.get(
+  "",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  listDoctorController
+);
+router.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorUpdateController
+);
+router.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  deleteDoctorController
+);
 
 export default router;
