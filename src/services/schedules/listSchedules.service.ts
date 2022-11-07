@@ -6,7 +6,6 @@ const listSchedulesService = async (id: string): Promise<Schedule[]> => {
   const schedulesRepository = AppDataSource.getRepository(Schedule);
   const userRepository = AppDataSource.getRepository(User);
   const findUser = await userRepository.findOneBy({ id });
-  console.log(findUser);
 
   const where = !findUser ? { doctor: { id } } : { user: { id } };
 
