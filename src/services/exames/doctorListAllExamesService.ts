@@ -6,7 +6,7 @@ const doctorListAllExamesServices = async (): Promise<IExames[]> => {
   const examesRepository = AppDataSource.getRepository(ExamesUserDoctor);
   const exames = await examesRepository.find();
 
-  return exames
+  return exames;
 };
 
 export default doctorListAllExamesServices;
