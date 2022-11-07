@@ -10,7 +10,7 @@ const doctorListExamesServices = async (id: string): Promise<IExames[]> => {
     throw new appError(400, "Exam not found.");
   }
 
-  return exames
+  return exames;
 };
 
 export default doctorListExamesServices;
