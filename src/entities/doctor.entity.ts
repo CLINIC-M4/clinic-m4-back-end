@@ -9,7 +9,9 @@ import {
   Entity,
 } from "typeorm";
 
-@Entity("doctor")
+import { Schedule } from "./schedule.entity";
+
+@Entity("doctors")
 export class Doctor {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -37,6 +39,9 @@ export class Doctor {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Schedule, (schedule) => schedule.doctor)
+  schedule: Schedule[];
 
   //   @OneToMany(() => Address, (address) => address.id)
   //   address: string;
