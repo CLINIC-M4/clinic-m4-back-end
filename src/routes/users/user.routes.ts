@@ -12,7 +12,7 @@ const router = Router();
 
 router.post("", createUserController);
 router.get("", ensureAuthMiddleware, verifyIsAdmMiddleware, listUserController);
-router.get("/exames", ensureAuthMiddleware, userListExamesController);
+router.get("/exams", ensureAuthMiddleware, userListExamesController);
 router.patch(
   "/:id",
   ensureAuthMiddleware,

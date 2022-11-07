@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import updateExamsService from "../../services/exames/updateExame.Service";
 
 const updateExamsController = async (req: Request, res: Response) => {
   const { id } = req.params;

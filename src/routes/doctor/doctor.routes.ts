@@ -4,9 +4,10 @@ import deleteDoctorController from "../../controller/doctor/deleteDoctor.control
 import doctorUpdateController from "../../controller/doctor/doctorUpdate.Controller";
 import listDoctorController from "../../controller/doctor/listDoctor.Controller";
 import registerDoctorController from "../../controller/doctor/registerDoctor.Controller";
-import registerExamController from "../../controller/doctor/registerExam.controller";
+import registerExamController from "../../controller/exames/registerExam.controller";
 import doctorListAllExamesController from "../../controller/exames/doctorListAllExams.controller";
 import doctorListExamesController from "../../controller/exames/doctorListExames.controller";
+import updateExamsController from "../../controller/exames/updateExames.Controller";
 
 import ensureAuthMiddleware from "../../middleware/ensureAuth.middlewares";
 import verifyEmail from "../../middleware/verifyEmail.Middlewares";
@@ -16,9 +17,9 @@ const router = Router();
 
 router.post("", verifyEmail, registerDoctorController);
 router.post(
-  "/exames/register",
+  "/exams/register",
   ensureAuthMiddleware,
-  verifyIsAdmMiddleware,
+  // verifyIsAdmMiddleware,
   registerExamController
 );
 
@@ -29,13 +30,13 @@ router.get(
   listDoctorController
 );
 router.get(
-  "/exames",
+  "/exams",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
   doctorListAllExamesController
 );
 router.get(
-  "/exames/:id",
+  "/exams/:id",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
   doctorListExamesController
@@ -47,10 +48,10 @@ router.patch(
   doctorUpdateController
 );
 router.patch(
-  "/exames/update/:id",
+  "/exams/update/:id",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
-  updateExamesController
+  updateExamsController
 );
 router.delete(
   "/:id",

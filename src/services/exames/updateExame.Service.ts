@@ -10,14 +10,14 @@ const updateExamsService = async (id: string, updates: IExamUpdate) => {
   const examsRepository = AppDataSource.getRepository(ExamesUserDoctor);
   const exam = await examsRepository.findOneBy({ id });
 
-  const { doctor_id } = updates;
+  /*const { doctor_id } = updates;
 
   if (doctor_id | updates.id) {
     throw new appError(
       401,
       `Update unauthorized of ${doctor_id} and ${updates.id}`
     );
-  }
+  }*/
 
   const updateExam = await examsRepository.update(id, { ...updates });
 
