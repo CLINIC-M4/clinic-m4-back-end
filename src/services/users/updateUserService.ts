@@ -32,7 +32,7 @@ const updateUserService = async (id: string, newData: IUserUpdate) => {
     newData.password = await hash(newData.password, 10);
   }
 
-   const newUser = await usersRepository.update(id, { ...newData });
+  const newUser = await usersRepository.update(id, { ...newData });
 
   const newUserReq = await usersRepository.findOneBy({ id });
   const updateRes = {
