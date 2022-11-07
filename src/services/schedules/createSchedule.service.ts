@@ -20,7 +20,11 @@ const createScheduleService = async (
   if (!user) {
     throw new appError(404, "User id invalid");
   }
-
+  
+  if(user.isActive === false){
+  throw new Error("This account was deleted")
+  }
+  
   const doctor = await doctorRepository.findOneBy({ id: doctorId });
   if (!doctor) {
     throw new appError(404, "Doctor id Invalid");

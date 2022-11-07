@@ -6,8 +6,8 @@ import { Doctor } from "../../entities/doctor.entity";
 import { IDoctorLogin } from "../../interfaces/doctor/doctor";
 
 const doctorLoginService = async ({ email, password }: IDoctorLogin) => {
-  const userRepository = AppDataSource.getRepository(Doctor);
-  const doctorAccount = await userRepository.findOneBy({ email });
+  const doctorRepository = AppDataSource.getRepository(Doctor);
+  const doctorAccount = await doctorRepository.findOneBy({ email });
   if(doctorAccount?.isActive === false){
     throw new Error("This account was deleted")
   }
