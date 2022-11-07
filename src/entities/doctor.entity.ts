@@ -19,20 +19,20 @@ export class Doctor {
   @Column({ length: 100, nullable: false })
   name: string;
 
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   email: string;
 
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   crm: string;
 
   @Column({ length: 100, nullable: false })
   password: string;
 
-  @Column({nullable: true, default:true})
+  @Column({ nullable: true, default: true })
   isAdm: boolean;
 
-  @Column({default:true})
-  isActive:boolean
+  @Column({ default: true })
+  isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
