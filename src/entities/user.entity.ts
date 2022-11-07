@@ -16,9 +16,9 @@ export class User {
   readonly id: string;
   @Column({ length: 150 })
   name: string;
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   email: string;
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   cpf: string;
   @Column({ length: 150 })
   @Exclude()

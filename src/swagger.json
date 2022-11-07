@@ -54,46 +54,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "cpf": {
-                      "type": "string"
-                    },
-                    "isAdm": {
-                      "type": "boolean"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "id": {
-                      "type": "string"
-                    },
-                    "isActive": {
-                      "type": "boolean"
-                    }
-                  }
-                },
-                "examples": {
-                  "users": {
-                    "value": {
-                      "name": "Maria Almeida Silva",
-                      "email": "maria@email.com.br",
-                      "cpf": "999.999.999-00",
-                      "isAdm": "true or false",
-                      "createdAt": "2022-11-04T23:00:54.938Z",
-                      "updatedAt": "2022-11-04T23:00:54.938Z",
-                      "id": "18c008c8-590c-4721-8a97-056733d62954",
-                      "isActive": "true or false"
-                    }
-                  }
+                  "$ref": "#/components/schemas/newUser"
                 }
               }
             }
@@ -139,18 +100,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "/users/login": {
-                    "value": {
-                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6dHJ1ZSwiaWQiOiI4Yzc5NmNiZi1jZDczLTRlYjMtYTI0NC0wOTc5ODNlNGQ3YTEiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjY3NjA1NDk2LCJleHAiOjE2Njc2OTE4OTZ9.waDCkcpEAGqU65xuQki3hqcVmTrb3huMQpEtcffLYdI"
-                    }
-                  }
+                  "$ref": "#/components/schemas/token"
                 }
               }
             }
@@ -174,7 +124,76 @@
       "post": {
         "tags": ["Médico"],
         "summary": "Criação de novo usuário - Médico",
-        "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - Médico."
+        "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - Médico.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Nome do usuário",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Email do usuário",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "Senha do usuário",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "CRM",
+            "description": "CRM do usuário - somente números, sem caracters",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "isAdm",
+            "description": "Usuário é administrador?",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/newDoctor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados com parâmetros invalidos!"
+          },
+          "409": {
+            "description": "Usuário já possui cadastro!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "This email is already in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "get": {
         "tags": ["Médico"],
@@ -187,6 +206,84 @@
         "tags": ["Médico"],
         "summary": "Listagem de todos os usuários - Médicos",
         "description": "Necessário validação de permissões!"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "newUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "newDoctor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "crm": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "errorMessage": {
+        "type": "object",
+        "properties": {
+          "message": "string"
+        }
       }
     }
   }
