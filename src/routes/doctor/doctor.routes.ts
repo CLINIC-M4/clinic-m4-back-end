@@ -6,14 +6,36 @@ import listDoctorController from "../../controller/doctor/listDoctor.Controller"
 import registerDoctorController from "../../controller/doctor/registerDoctor.Controller";
 
 import ensureAuthMiddleware from "../../middleware/ensureAuth.middlewares";
+import validateSerializerMiddleware from "../../middleware/validateSerializer.middleware";
 import verifyEmail from "../../middleware/verifyEmail.Middlewares";
 import verifyIsAdmMiddleware from "../../middleware/verifyIsAdm.middleware";
+import { createDoctorSerializer } from "../../serializers";
 
 const router = Router();
 
-router.post("", verifyEmail, registerDoctorController);
-router.get("", ensureAuthMiddleware, verifyIsAdmMiddleware, listDoctorController);
-router.patch("/:id", ensureAuthMiddleware, verifyIsAdmMiddleware, doctorUpdateController)
-router.delete("/:id", ensureAuthMiddleware, verifyIsAdmMiddleware, deleteDoctorController)
+router.post(
+  "",
+  validateSerializerMiddleware(createDoctorSerializer),
+  verifyEmail,
+  registerDoctorController
+);
+router.get(
+  "",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  listDoctorController
+);
+router.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorUpdateController
+);
+router.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  deleteDoctorController
+);
 
 export default router;
