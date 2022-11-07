@@ -4,7 +4,7 @@ import doctorLoginController from "../../controller/doctor/loginDoctor.controlle
 
 const router = Router();
 
-router.post("", userLoginController);
+router.post("/users", userLoginController);
 router.post("/doctor", doctorLoginController)
 
 export default router;

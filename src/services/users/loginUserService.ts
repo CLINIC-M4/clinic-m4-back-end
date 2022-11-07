@@ -11,6 +11,7 @@ const userLoginService = async ({ email, password }: IUserLogin) => {
   if(account?.isActive === false){
     throw new Error("This account was deleted")
   }
+  
   if (!account) {
     throw new Error("Wrong email/password");
   }

@@ -10,6 +10,7 @@ const userListExamesService = async (id: string, idUser: String) => {
   if (idUser != exames?.user_id) {
     throw new appError(400, "Exam imcompatible with User");
   }
+
   if (exames == null || exames == undefined || !exames) {
     throw new appError(400, "Exam not found.");
   }
