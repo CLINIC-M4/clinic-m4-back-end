@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IExam } from "../../interfaces/doctor/doctor";
+
 import registerExamService from "../../services/doctor/registerExamService";
 
 const registerExamController = async (req: Request, res: Response) => {

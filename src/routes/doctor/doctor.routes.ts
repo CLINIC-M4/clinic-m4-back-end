@@ -5,6 +5,8 @@ import doctorUpdateController from "../../controller/doctor/doctorUpdate.Control
 import listDoctorController from "../../controller/doctor/listDoctor.Controller";
 import registerDoctorController from "../../controller/doctor/registerDoctor.Controller";
 import registerExamController from "../../controller/doctor/registerExam.controller";
+import doctorListAllExamesController from "../../controller/exames/doctorListAllExams.controller";
+import doctorListExamesController from "../../controller/exames/doctorListExames.controller";
 
 import ensureAuthMiddleware from "../../middleware/ensureAuth.middlewares";
 import verifyEmail from "../../middleware/verifyEmail.Middlewares";
@@ -25,6 +27,18 @@ router.get(
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
   listDoctorController
+);
+router.get(
+  "/exames",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorListAllExamesController
+);
+router.get(
+  "/exames/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorListExamesController
 );
 router.patch(
   "/:id",

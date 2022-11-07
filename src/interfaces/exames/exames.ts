@@ -2,8 +2,8 @@ import { Doctor } from "../../entities/doctor.entity";
 import { User } from "../../entities/user.entity";
 
 export interface IExams {
-  user_id: string;
-  doctor_id: string;
+  user_id: User;
+  doctor_id: Doctor;
   tipo_exame: string;
   data: string;
   hora: string;
@@ -11,8 +11,8 @@ export interface IExams {
 }
 
 export interface IExamUpdate {
-  user_id: string;
-  doctor_id?: string;
+  user_id: User;
+  doctor_id?: Doctor;
   tipo_exame: string;
   data: string;
   hora: string;

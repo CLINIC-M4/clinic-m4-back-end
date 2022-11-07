@@ -1,8 +1,8 @@
 import AppDataSource from "../../data-source";
 import { ExamesUserDoctor } from "../../entities/examesUserDoctor.entity";
-import { IExames } from "../../interfaces/exames/exames";
+import { IExams } from "../../interfaces/exames/exames";
 
-const doctorListAllExamesServices = async (): Promise<IExames[]> => {
+const doctorListAllExamesServices = async (): Promise<IExams[]> => {
   const examesRepository = AppDataSource.getRepository(ExamesUserDoctor);
   const exames = await examesRepository.find();
 
