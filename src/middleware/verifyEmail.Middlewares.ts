@@ -12,7 +12,7 @@ const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
       email: email,
     });
     if (validateEmail) {
-      return res.status(400).json({
+      return res.status(409).json({
         message: "This email is already in use",
       });
     }
@@ -24,7 +24,7 @@ const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
       email: email,
     });
     if (validateEmail) {
-      return res.status(400).json({
+      return res.status(409).json({
         message: "This email is already in use",
       });
     }
