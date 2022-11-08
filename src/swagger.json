@@ -958,15 +958,191 @@
     "/schedules/id": {
       "get": {
         "tags": ["Schedules"],
-        "summary": "Listagem de agendamento de horario por ID"
+        "summary": "Listagem de agendamento de horario por ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com os agendamentos cadastrados pelo ID!"
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna um objetos de error!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedules not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "tags": ["Schedules"],
-        "summary": "Alteração de agendamento de horario por ID"
+        "summary": "Alteração de agendamento de horario por ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com os agendamentos alterados pelo ID!"
+          },
+          "400": {
+            "description": "Retorna um array de objetos com possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "informations": "Missing body informations",
+                      "registed": "Already scheduled time and date",
+                      "bussy": "Cannot visit during business hours",
+                      "wrongFormat": "Date in wrong format, correct format is mm/dd/yyyy",
+                      "appointments": "Appointments can only be made on weekdays"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna um objetos de error!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedules not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": ["Schedules"],
-        "summary": "Exclusão de agendamento de horario por ID"
+        "summary": "Exclusão de agendamento de horario por ID",
+        "responses": {
+          "204": {
+            "description": "Retorna um objeto com uma mensagem de exclusão pelo ID!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "sucess": {
+                    "value": {
+                      "sucess": "Delete schedule"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna um objeto com uma mensagem de possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedule not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
