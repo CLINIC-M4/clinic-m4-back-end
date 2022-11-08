@@ -6,6 +6,7 @@ import {
   OneToMany,
   Entity,
 } from "typeorm";
+import { ExamesUserDoctor } from "./examesUserDoctor.entity";
 
 import { Schedule } from "./schedule.entity";
 
@@ -41,9 +42,6 @@ export class Doctor {
   @OneToMany(() => Schedule, (schedule) => schedule.doctor)
   schedule: Schedule[];
 
-  //   @OneToMany(() => Address, (address) => address.id)
-  //   address: string;
-
-  //   @OneToMany(() => Specialization, (specialization) => address.id)
-  //   specialization: string;
+  @OneToMany(() => ExamesUserDoctor, (exames) => exames.doctor_id)
+  doctor_id: ExamesUserDoctor[];
 }

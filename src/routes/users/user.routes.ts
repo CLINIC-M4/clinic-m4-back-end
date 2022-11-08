@@ -1,4 +1,5 @@
 import { Router } from "express";
+import userListExamesController from "../../controller/exames/userListExames.controller";
 import createUserController from "../../controller/user/createUser.controller";
 import deleteUserController from "../../controller/user/deleteUser.controller";
 import listUserController from "../../controller/user/listUser.controler";
@@ -18,6 +19,7 @@ router.post(
   createUserController
 );
 router.get("", ensureAuthMiddleware, verifyIsAdmMiddleware, listUserController);
+router.get("/exams", ensureAuthMiddleware, userListExamesController);
 router.patch(
   "/:id",
   ensureAuthMiddleware,

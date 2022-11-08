@@ -4,6 +4,10 @@ import deleteDoctorController from "../../controller/doctor/deleteDoctor.control
 import doctorUpdateController from "../../controller/doctor/doctorUpdate.Controller";
 import listDoctorController from "../../controller/doctor/listDoctor.Controller";
 import registerDoctorController from "../../controller/doctor/registerDoctor.Controller";
+import registerExamController from "../../controller/exames/registerExam.controller";
+import doctorListAllExamesController from "../../controller/exames/doctorListAllExams.controller";
+import doctorListExamesController from "../../controller/exames/doctorListExames.controller";
+import updateExamsController from "../../controller/exames/updateExames.Controller";
 
 import ensureAuthMiddleware from "../../middleware/ensureAuth.middlewares";
 import validateSerializerMiddleware from "../../middleware/validateSerializer.middleware";
@@ -13,23 +17,43 @@ import { createDoctorSerializer } from "../../serializers";
 
 const router = Router();
 
+router.post("", validateSerializerMiddleware(createDoctorSerializer), verifyEmail, registerDoctorController);
 router.post(
-  "",
-  validateSerializerMiddleware(createDoctorSerializer),
-  verifyEmail,
-  registerDoctorController
+  "/exams/register",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  registerExamController
 );
+
 router.get(
   "",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
   listDoctorController
 );
+router.get(
+  "/exams",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorListAllExamesController
+);
+router.get(
+  "/exams/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  doctorListExamesController
+);
 router.patch(
   "/:id",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
   doctorUpdateController
+);
+router.patch(
+  "/exams/update/:id",
+  ensureAuthMiddleware,
+  verifyIsAdmMiddleware,
+  updateExamsController
 );
 router.delete(
   "/:id",
