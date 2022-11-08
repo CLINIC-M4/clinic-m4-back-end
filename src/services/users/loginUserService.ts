@@ -8,10 +8,10 @@ import jwt from "jsonwebtoken";
 const userLoginService = async ({ email, password }: IUserLogin) => {
   const userRepository = AppDataSource.getRepository(User);
   const account = await userRepository.findOneBy({ email });
-  if(account?.isActive === false){
-    throw new Error("This account was deleted")
+  if (account?.isActive === false) {
+    throw new Error("This account was deleted");
   }
-  
+
   if (!account) {
     throw new Error("Wrong email/password");
   }
@@ -26,10 +26,13 @@ const userLoginService = async ({ email, password }: IUserLogin) => {
       isActive: account.isActive,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h"}
+    { expiresIn: "24h" }
   );
-
-  return token;
+  const responseLogin = {
+    id: account.id,
+    token: token,
+  };
+  return responseLogin;
 };
 
 export default userLoginService;
