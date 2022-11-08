@@ -1,13 +1,12 @@
 import {
-  PrimaryColumn,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToOne,
   Entity,
 } from "typeorm";
+import { ExamesUserDoctor } from "./examesUserDoctor.entity";
 
 import { Schedule } from "./schedule.entity";
 
@@ -19,20 +18,20 @@ export class Doctor {
   @Column({ length: 100, nullable: false })
   name: string;
 
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   email: string;
 
-  @Column({ length: 100, unique: true, nullable: false })
+  @Column({ length: 100, nullable: false })
   crm: string;
 
   @Column({ length: 100, nullable: false })
   password: string;
 
-  @Column({nullable: true, default:true})
+  @Column({ nullable: true, default: true })
   isAdm: boolean;
 
-  @Column({default:true})
-  isActive:boolean
+  @Column({ default: true })
+  isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -43,9 +42,6 @@ export class Doctor {
   @OneToMany(() => Schedule, (schedule) => schedule.doctor)
   schedule: Schedule[];
 
-  //   @OneToMany(() => Address, (address) => address.id)
-  //   address: string;
-
-  //   @OneToMany(() => Specialization, (specialization) => address.id)
-  //   specialization: string;
+  @OneToMany(() => ExamesUserDoctor, (exames) => exames.doctor_id)
+  doctor_id: ExamesUserDoctor[];
 }

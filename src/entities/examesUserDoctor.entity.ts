@@ -2,8 +2,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  OneToMany,
+  JoinColumn,
   ManyToOne,
 } from "typeorm";
 import { User } from "./user.entity";
@@ -15,22 +14,24 @@ class ExamesUserDoctor {
   id: string;
 
   @ManyToOne(() => User)
-  user_id: String;
+  @JoinColumn()
+  user_id: User;
 
   @ManyToOne(() => Doctor)
+  @JoinColumn()
   doctor_id: Doctor;
 
   @Column()
-  tipo_exame: String;
+  tipo_exame: string;
 
-  @CreateDateColumn()
-  data: Date;
+  @Column()
+  data: string;
 
   @Column()
   hora: string;
 
   @Column()
-  resultado: String;
+  resultado: string;
 }
 
 export { ExamesUserDoctor };
