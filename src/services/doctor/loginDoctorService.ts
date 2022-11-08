@@ -8,8 +8,8 @@ import { IDoctorLogin } from "../../interfaces/doctor/doctor";
 const doctorLoginService = async ({ email, password }: IDoctorLogin) => {
   const doctorRepository = AppDataSource.getRepository(Doctor);
   const doctorAccount = await doctorRepository.findOneBy({ email });
-  if(doctorAccount?.isActive === false){
-    throw new Error("This account was deleted")
+  if (doctorAccount?.isActive === false) {
+    throw new Error("This account was deleted");
   }
   if (!doctorAccount) {
     throw new Error("Wrong email/password");
@@ -28,8 +28,11 @@ const doctorLoginService = async ({ email, password }: IDoctorLogin) => {
     process.env.SECRET_KEY as string,
     { expiresIn: "1d" }
   );
-
-  return token;
+  const responseLogin = {
+    id: doctorAccount.id,
+    token: token,
+  };
+  return responseLogin;
 };
 
 export default doctorLoginService;
