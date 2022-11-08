@@ -778,8 +778,109 @@
           }
         }
       }
+    },
+    "/schedules": {
+      "post": {
+        "tags": ["Schedules"],
+        "summary": "Agendamento de horario",
+        "description": "Insira todos os parâmetros solicitados para realizar...",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "date",
+            "description": "Data do agendamento (mm/dd/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hour",
+            "description": "Horario do agendamento (HR:MN)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "doctorId",
+            "description": "ID do usuário Doctor (aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Agendamento cadastrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/schedules"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados com parâmetros invalidos!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Date is required field!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Schedules"],
+        "summary": "Listagem de todos os agendamentos realizados",
+        "description": "Insira todos os parâmetros solicitados para realizar..."
+      }
+    },
+    "/schedules/id": {
+      "get": {
+        "tags": ["Schedules"],
+        "summary": "Listagem de agendamento de horario por ID"
+      },
+      "patch": {
+        "tags": ["Schedules"],
+        "summary": "Alteração de agendamento de horario por ID"
+      },
+      "delete": {
+        "tags": ["Schedules"],
+        "summary": "Exclusão de agendamento de horario por ID"
+      }
     }
   },
+
   "components": {
     "schemas": {
       "newUser": {
@@ -854,6 +955,48 @@
         "type": "object",
         "properties": {
           "message": "string"
+        }
+      },
+      "schedules": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "hour": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "cpf": {
+                "type": "string"
+              }
+            }
+          },
+          "doctor": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "crm": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     }
