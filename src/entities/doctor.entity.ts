@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -25,6 +26,7 @@ export class Doctor {
   crm: string;
 
   @Column({ length: 100, nullable: false })
+  @Exclude()
   password: string;
 
   @Column({ nullable: true, default: true })

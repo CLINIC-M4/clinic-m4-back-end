@@ -2,6 +2,7 @@ import AppDataSource from "../../data-source";
 import { IUserRequest } from "../../interfaces/users";
 import { hash } from "bcrypt";
 import { User } from "../../entities/user.entity";
+import { appError } from "../../errors/appError";
 
 const createUserService = async ({
   name,
@@ -11,6 +12,11 @@ const createUserService = async ({
   isAdm,
 }: IUserRequest): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
+
+  const findCpf = await userRepository.findOneBy({ cpf });
+  if (findCpf) {
+    throw new appError(400, "This CPF is already in use");
+  }
 
   if (!password) {
     throw new Error("Password is missing");
