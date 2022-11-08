@@ -1,12 +1,15 @@
 import AppDataSource from "../../data-source";
 import { Schedule } from "../../entities/schedule.entity";
 import { appError } from "../../errors/appError";
-import { IScheduleRequest } from "../../interfaces/schedules";
+import {
+  IScheduleRequest,
+  IScheduleResponse,
+} from "../../interfaces/schedules";
 
 const updateScheduleService = async (
   { date, hour }: IScheduleRequest,
   id: string
-): Promise<Schedule | null> => {
+) => {
   if (!date || !hour) {
     throw new appError(400, "Missing body informations");
   }
@@ -31,6 +34,15 @@ const updateScheduleService = async (
     throw new appError(400, "Cannot visit during business hours");
   }
 
+  const data = new Date(date);
+  const verifyDate = String(data);
+  if (verifyDate == "Invalid Date") {
+    throw new appError(
+      400,
+      "Date in wrong format, correct format is mm/dd/yyyy"
+    );
+  }
+
   const verifyDay = new Date(date).getDay();
   if (verifyDay < 1 || verifyDay > 5) {
     throw new appError(400, "Appointments can only be made on weekdays");
@@ -42,8 +54,25 @@ const updateScheduleService = async (
   });
 
   const schedule = await scheduleRepository.findOneBy({ id });
+  if (schedule) {
+    const responseSchedule = {
+      id: schedule.id,
+      date: schedule.date,
+      hour: schedule.hour,
+      user: {
+        name: schedule.user.name,
+        email: schedule.user.email,
+        cpf: schedule.user.cpf,
+      },
+      doctor: {
+        name: schedule.doctor.name,
+        email: schedule.doctor.email,
+        crm: schedule.doctor.crm,
+      },
+    };
 
-  return schedule;
+    return responseSchedule;
+  }
 };
 
 export default updateScheduleService;
