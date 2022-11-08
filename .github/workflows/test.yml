@@ -2,9 +2,9 @@ name: Execução dos testes de integração
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ feat/testsUsers ]
   pull_request:
-    branches: [ dev ]
+    branches: [ feat/testsUsers ]
 
 jobs:
   integration_tests:
