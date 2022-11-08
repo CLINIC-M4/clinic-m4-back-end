@@ -2,12 +2,12 @@ import AppDataSource from "../../data-source";
 import { appError } from "../../errors/appError";
 import { ExamesUserDoctor } from "../../entities/examesUserDoctor.entity";
 
-const userListExamesService = async (id: string, idUser: String) => {
+const userListExamesService = async (id: string) => {
   const examRepository = AppDataSource.getRepository(ExamesUserDoctor);
 
   const exames = await examRepository.findOneBy({ id });
 
-  if (idUser != exames?.user_id) {
+  if (!exames) {
     throw new appError(400, "Exam imcompatible with User");
   }
 
