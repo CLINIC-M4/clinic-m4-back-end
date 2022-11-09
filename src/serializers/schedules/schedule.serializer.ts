@@ -7,7 +7,6 @@ const createScheduleSerializer = yup.object().shape({
 });
 
 const updateScheduleSerializer = yup.object().shape({
-  doctorId: yup.string().required(),
   date: yup.string().required(),
   hour: yup.string().required(),
 });
