@@ -42,12 +42,17 @@ const createScheduleService = async (
   }
 
   const businessHours = hour.split(":");
-  if (Number(businessHours[0]) > 17 || Number(businessHours[0]) < 8) {
+  if (
+    Number(businessHours[0]) > 18 ||
+    Number(businessHours[0]) < 8 ||
+    (Number(businessHours[0]) === 18 && Number(businessHours[1]) !== 0)
+  ) {
     throw new appError(400, "Cannot visit during business hours");
   }
-
+  if (Number(businessHours[1]) < 0 || Number(businessHours[1]) > 60) {
+    throw new appError(400, "Minutes invalid");
+  }
   const data = new Date(date);
-  console.log(data);
   const verifyDate = String(data);
   if (verifyDate == "Invalid Date") {
     throw new appError(

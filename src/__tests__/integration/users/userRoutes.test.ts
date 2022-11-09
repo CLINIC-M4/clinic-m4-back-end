@@ -10,7 +10,7 @@ import {
   mockedUserNotName,
   mockedUserCPFInvalid,
   mockedUserNotPassword,
-} from "../../mocks";
+} from "../../mocks/users";
 
 describe("/users", () => {
   let connection: DataSource;

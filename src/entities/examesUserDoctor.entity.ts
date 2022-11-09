@@ -15,11 +15,11 @@ class ExamesUserDoctor {
 
   @ManyToOne(() => User)
   @JoinColumn()
-  user_id: User;
+  user: User;
 
   @ManyToOne(() => Doctor)
   @JoinColumn()
-  doctor_id: Doctor;
+  doctor: Doctor;
 
   @Column()
   tipo_exame: string;
@@ -32,6 +32,7 @@ class ExamesUserDoctor {
 
   @Column()
   resultado: string;
+  doctor: any;
 }
 
 export { ExamesUserDoctor };

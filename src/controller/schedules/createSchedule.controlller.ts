@@ -14,8 +14,7 @@ const createScheduleController = async (req: Request, res: Response) => {
     const year = schedule.date.slice(6, 10);
     const hour = schedule.hour.slice(0, 2);
     const minute = schedule.hour.slice(3, 5);
-    console.log(hour);
-    console.log(minute);
+
     await sendEmail({
       to: schedule.user.email,
       name: schedule.user.name,
@@ -29,7 +28,7 @@ const createScheduleController = async (req: Request, res: Response) => {
   }
   return res
     .status(201)
-    .json({ message: "Created schedule", schedule: schedule });
+    .json({ schedule: schedule });
 };
 
 export { createScheduleController };
