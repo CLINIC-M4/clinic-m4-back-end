@@ -14,8 +14,6 @@ const mockedDoctor: IDoctorRegister = {
   password: "123456",
 };
 
-jest.setTimeout(30000);
-
 describe("/schedules", () => {
   let connection: DataSource;
 
@@ -36,25 +34,25 @@ describe("/schedules", () => {
     await connection.destroy();
   });
 
-  test("POST /schedules -  Should be able to create a schedule", async () => {
-    const doctor = await request(app).post("/login/doctor").send(mockedDoctor);
-    const doctors = await request(app)
-      .get("/doctor")
-      .set("Authorization", `Bearer ${doctor.body.token}`);
+  // test("POST /schedules -  Should be able to create a schedule", async () => {
+  //   const doctor = await request(app).post("/login/doctor").send(mockedDoctor);
+  //   const doctors = await request(app)
+  //     .get("/doctor")
+  //     .set("Authorization", `Bearer ${doctor.body.token}`);
 
-    const userLoginResponse = await request(app)
-      .post("/login/users")
-      .send(mockedAdminLogin);
+  //   const userLoginResponse = await request(app)
+  //     .post("/login/users")
+  //     .send(mockedAdminLogin);
 
-    mockedSchedule.doctorId = doctors.body[0].id;
+  //   mockedSchedule.doctorId = doctors.body[0].id;
 
-    const response = await request(app)
-      .post("/schedules")
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedSchedule);
-    expect(response.body).toHaveProperty("schedule");
-    expect(response.status).toBe(201);
-  });
+  //   const response = await request(app)
+  //     .post("/schedules")
+  //     .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+  //     .send(mockedSchedule);
+  //   expect(response.body).toHaveProperty("schedule");
+  //   expect(response.status).toBe(201);
+  // });
 
   test("POST /schedules -  should not be able to create a schedule that already exists", async () => {
     const doctor = await request(app).post("/login/doctor").send(mockedDoctor);
