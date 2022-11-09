@@ -9,15 +9,15 @@ const updateUserService = async (id: string, newData: IUserUpdate) => {
   const user = await usersRepository.findOneBy({ id });
 
   if (newData.isAdm !== undefined) {
-    throw new appError(401, "Invalid input");
+    throw new appError(400, "Invalid input");
   }
 
   if (newData.isActive !== undefined) {
-    throw new appError(401, "Invalid input");
+    throw new appError(400, "Invalid input");
   }
 
   if (newData.id !== undefined) {
-    throw new appError(401, "Invalid input");
+    throw new appError(400, "Invalid input");
   }
 
   if (!user) {
@@ -32,7 +32,7 @@ const updateUserService = async (id: string, newData: IUserUpdate) => {
     newData.password = await hash(newData.password, 10);
   }
 
-   const newUser = await usersRepository.update(id, { ...newData });
+  const newUser = await usersRepository.update(id, { ...newData });
 
   const newUserReq = await usersRepository.findOneBy({ id });
   const updateRes = {

@@ -1,12 +1,15 @@
 import AppDataSource from "../../data-source";
 import { Schedule } from "../../entities/schedule.entity";
 import { appError } from "../../errors/appError";
-import { IScheduleRequest } from "../../interfaces/schedules";
+import {
+  IScheduleResponse,
+  IScheduleRequest,
+} from "../../interfaces/schedules";
 
 const updateScheduleService = async (
   { date, hour }: IScheduleRequest,
   id: string
-): Promise<Schedule | null> => {
+): Promise<IScheduleResponse> => {
   if (!date || !hour) {
     throw new appError(400, "Missing body informations");
   }
@@ -27,8 +30,24 @@ const updateScheduleService = async (
   }
 
   const businessHours = hour.split(":");
-  if (Number(businessHours[0]) > 18 || Number(businessHours[0]) < 8) {
+  if (
+    Number(businessHours[0]) > 18 ||
+    Number(businessHours[0]) < 8 ||
+    (Number(businessHours[0]) === 18 && Number(businessHours[1]) !== 0)
+  ) {
     throw new appError(400, "Cannot visit during business hours");
+  }
+  if (Number(businessHours[1]) < 0 || Number(businessHours[1]) > 60) {
+    throw new appError(400, "Minutes invalid");
+  }
+
+  const data = new Date(date);
+  const verifyDate = String(data);
+  if (verifyDate == "Invalid Date") {
+    throw new appError(
+      400,
+      "Date in wrong format, correct format is mm/dd/yyyy"
+    );
   }
 
   const verifyDay = new Date(date).getDay();
@@ -41,7 +60,21 @@ const updateScheduleService = async (
     hour,
   });
 
-  const schedule = await scheduleRepository.findOneBy({ id });
+  const schedule = await scheduleRepository.findOne({
+    select: {
+      id: true,
+      date: true,
+      hour: true,
+      user: { name: true, email: true, cpf: true },
+      doctor: { name: true, email: true, crm: true },
+    },
+    relations: { user: true, doctor: true },
+    where: { id: id },
+  });
+
+  if (!schedule) {
+    throw new appError(400, "Error update schedule");
+  }
 
   return schedule;
 };
