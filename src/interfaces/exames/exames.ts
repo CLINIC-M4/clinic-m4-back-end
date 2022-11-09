@@ -18,3 +18,18 @@ export interface IExamUpdate {
   hora: string;
   resultado: string;
 }
+
+export interface IExamsTest {
+  user_id: {
+    name: string;
+    cpf: string;
+  };
+  doctor_id: {
+    name: string;
+    crm: string;
+  };
+  tipo_exame: string;
+  data: string;
+  hora: string;
+  resultado: string;
+}

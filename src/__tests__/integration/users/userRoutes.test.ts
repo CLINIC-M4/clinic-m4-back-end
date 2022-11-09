@@ -73,7 +73,9 @@ describe("/users", () => {
   });
 
   test("POST /users -  Should not be able to create a user that not exists password in body", async () => {
-    const response = await request(app).post("/users").send(mockedUserNotPassword);
+    const response = await request(app)
+      .post("/users")
+      .send(mockedUserNotPassword);
 
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toEqual("password is a required field");
@@ -346,5 +348,30 @@ describe("/users", () => {
     expect(response.status).toBe(200);
     expect(userUpdated.body[0].name).toEqual("Jose");
     expect(userUpdated.body[0]).not.toHaveProperty("password");
+  });
+
+  test("GET /users/exams -  Should be able to list exams", async () => {
+    const LoginResponse = await request(app)
+      .post("/users/exams")
+      .send(mockedUserLogin);
+    const response = await request(app)
+      .get("/users/exams")
+      .set("Authorization", `Bearer ${LoginResponse.body.token}`);
+
+    expect(response.body[0]).not.toHaveProperty("password");
+    expect(response.body[0]).toHaveProperty("resultado");
+  });
+
+  test("GET /users/exams -  Should not be able to list exams", async () => {
+    const newValues = { token: "invalidToken" };
+    const LoginResponse = await request(app)
+      .post("/users/exams")
+      .send(mockedUserLogin);
+    const response = await request(app)
+      .get("/users/exams")
+      .set("Authorization", `Bearer ${newValues}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message");
   });
 });
