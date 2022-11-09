@@ -17,8 +17,6 @@ const registerExamService = async (
 
   const userRepository = AppDataSource.getRepository(User);
   const usuario = await userRepository.findOneBy(user_id.user_id);
-  
-  console.log(usuario)
 
   if (usuario == null || usuario == undefined || !usuario) {
     throw new appError(400, "User not found");
