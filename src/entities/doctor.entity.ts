@@ -44,6 +44,6 @@ export class Doctor {
   @OneToMany(() => Schedule, (schedule) => schedule.doctor)
   schedule: Schedule[];
 
-  @OneToMany(() => ExamesUserDoctor, (exames) => exames.doctor_id)
-  doctor_id: ExamesUserDoctor[];
+  @OneToMany(() => ExamesUserDoctor, (exames) => exames.doctor)
+  exam: ExamesUserDoctor[];
 }
