@@ -25,7 +25,7 @@ export class Doctor {
   @Column({ length: 100, nullable: false })
   crm: string;
 
-  @Column({ length: 100, nullable: false })
+  @Column({ length: 100 })
   @Exclude()
   password: string;
 

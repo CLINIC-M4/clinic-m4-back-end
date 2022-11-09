@@ -1,4 +1,4 @@
-import { IUserLogin, IUserRequest } from "../../interfaces/users";
+import { IUserLogin, IUserRequest } from "../../../interfaces/users";
 
 export const mockedUser: IUserRequest = {
   name: "André Leandro",

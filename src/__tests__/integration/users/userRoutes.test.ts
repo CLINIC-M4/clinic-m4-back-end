@@ -10,7 +10,7 @@ import {
   mockedUserNotName,
   mockedUserCPFInvalid,
   mockedUserNotPassword,
-} from "../../mocks";
+} from "../../mocks/users";
 
 describe("/users", () => {
   let connection: DataSource;
@@ -72,7 +72,7 @@ describe("/users", () => {
     expect(response.status).toBe(400);
   });
 
-  test("POST /users -  Should not be able to create a user that not exists name in body", async () => {
+  test("POST /users -  Should not be able to create a user that not exists password in body", async () => {
     const response = await request(app).post("/users").send(mockedUserNotPassword);
 
     expect(response.body).toHaveProperty("message");
