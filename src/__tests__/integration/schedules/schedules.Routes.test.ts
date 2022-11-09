@@ -14,6 +14,8 @@ const mockedDoctor: IDoctorRegister = {
   password: "123456",
 };
 
+jest.setTimeout(60000)
+
 describe("/schedules", () => {
   let connection: DataSource;
 
