@@ -18,6 +18,7 @@ const registerExamService = async (
     throw new appError(400, "Doctor not found");
   }
   const userRepository = AppDataSource.getRepository(User);
+
   const user = await userRepository.findOneBy({ id: user_id });
 
   if (!user) {
