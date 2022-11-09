@@ -7,7 +7,7 @@ import {
   Entity,
 } from "typeorm";
 import { ExamesUserDoctor } from "./examesUserDoctor.entity";
-
+import { Exclude } from "class-transformer";
 import { Schedule } from "./schedule.entity";
 
 @Entity("doctors")
@@ -25,6 +25,7 @@ export class Doctor {
   crm: string;
 
   @Column({ length: 100, nullable: false })
+  @Exclude()
   password: string;
 
   @Column({ nullable: true, default: true })
