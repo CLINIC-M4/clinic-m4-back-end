@@ -8,7 +8,6 @@ import {
   Entity,
 } from "typeorm";
 import { ExamesUserDoctor } from "./examesUserDoctor.entity";
-
 import { Schedule } from "./schedule.entity";
 
 @Entity("doctors")

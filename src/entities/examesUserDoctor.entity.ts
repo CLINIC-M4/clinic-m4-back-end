@@ -32,6 +32,7 @@ class ExamesUserDoctor {
 
   @Column()
   resultado: string;
+  doctor: any;
 }
 
 export { ExamesUserDoctor };

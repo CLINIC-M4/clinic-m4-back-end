@@ -1,6 +1,5 @@
 import AppDataSource from "../../data-source";
 import { Doctor } from "../../entities/doctor.entity";
-import { User } from "../../entities/user.entity";
 
 interface IMessage {
   message: string;
