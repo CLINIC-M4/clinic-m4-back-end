@@ -102,9 +102,12 @@ describe("/doctor", () => {
   });
 
   test("POST /doctor/exams/register -  Should be able to create exam", async () => {
+    const adminLoginResponse = await request(app)
+      .post("/login/doctor")
+      .send(mockedDoctorLogin);
     const response = await request(app)
       .post("/doctor/exams/register")
-      .send(mockedExam);
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     expect(response.body).toHaveProperty("doctor_id");
     expect(response.body).toHaveProperty("user_id");
@@ -117,7 +120,6 @@ describe("/doctor", () => {
       .send(mockedExamNotUser);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.body.message).toEqual("User not found");
     expect(response.status).toBe(400);
   });
 
@@ -130,9 +132,7 @@ describe("/doctor", () => {
       .get("/doctor/exams")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
-    expect(response.body[0]).not.toHaveProperty("password");
-    expect(response.body[0]).not.toHaveProperty("updatedAt");
-    expect(response.body[0]).not.toHaveProperty("createdAt");
+    expect(response.body[0]).toHaveProperty("resultado");
     expect(response.status).toBe(200);
   });
 });

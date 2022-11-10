@@ -351,15 +351,15 @@ describe("/users", () => {
   });
 
   test("GET /users/exams -  Should be able to list exams", async () => {
-    const LoginResponse = await request(app)
-      .post("/users/exams")
+    const userLoginResponse = await request(app)
+      .post("/login/users")
       .send(mockedUserLogin);
     const response = await request(app)
       .get("/users/exams")
-      .set("Authorization", `Bearer ${LoginResponse.body.token}`);
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
 
-    expect(response.body[0]).not.toHaveProperty("password");
-    expect(response.body[0]).toHaveProperty("resultado");
+    expect(response.body).not.toHaveProperty("password");
+    expect(response.body).toHaveProperty("resultado");
   });
 
   test("GET /users/exams -  Should not be able to list exams", async () => {
@@ -371,7 +371,7 @@ describe("/users", () => {
       .get("/users/exams")
       .set("Authorization", `Bearer ${newValues}`);
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 });
