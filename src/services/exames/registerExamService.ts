@@ -25,6 +25,7 @@ const registerExamService = async (
     throw new appError(400, "User not found");
   }
 
+
   const exame = examRepository.create({
     doctor,
     user,
@@ -33,6 +34,7 @@ const registerExamService = async (
     hora,
     resultado,
   });
+
 
   const exameSave = await examRepository.save(exame);
 

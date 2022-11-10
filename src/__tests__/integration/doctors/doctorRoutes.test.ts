@@ -2,7 +2,16 @@ import { DataSource } from "typeorm";
 import AppDataSource from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
-import { mockedDoctor, mockedDoctorLogin, mockedDoctorNotName, mockedDoctorNotPassword } from "../../mocks/doctors"
+
+import {
+  mockedDoctor,
+  mockedDoctorLogin,
+  mockedDoctorNotName,
+  mockedDoctorNotPassword,
+  mockedUserNotCrm,
+} from "../../mocks/doctors";
+import { mockedExam, mockedExamNotUser } from "../../mocks/exams";
+
 
 describe("/doctor", () => {
   let connection: DataSource;
@@ -92,6 +101,7 @@ describe("/doctor", () => {
     expect(response.status).toBe(401);
   });
 
+
   test("PATCH /doctor/:id - Should not be able to update doctor with invalid id", async () => {
     const newValues = { name: "Enrico Freitas", email: "enricofreitas12@gmail.com" };
 
@@ -110,9 +120,11 @@ describe("/doctor", () => {
       .set("Authorization", token)
       .send(newValues);
 
+
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(404);
   });
+
 
   test("PATCH /doctor/:id - Should not be able to update isAdm field value", async () => {
     const newValues = { isAdm: false };
@@ -138,6 +150,7 @@ describe("/doctor", () => {
   test("PATCH /doctor/:id - Should not be able to update isActive field value", async () => {
     const newValues = { isActive: false };
 
+
     const loginResponse = await request(app)
       .post("/login/doctor")
       .send(mockedDoctorLogin);
@@ -156,8 +169,12 @@ describe("/doctor", () => {
     expect(response.status).toBe(400);
   });
 
+
+  
+
   test("PATCH /doctor/:id - Should not be able to update id field value", async () => {
     const newValues = { id: false };
+
 
     const loginResponse = await request(app)
       .post("/login/doctor")
@@ -245,7 +262,44 @@ test("POST /login/doctor -  should not be able to login with the user with incor
     expect(response.body).toHaveProperty("message");
   });
 
+
+  test("POST /doctor/exams/register -  Should be able to create exam", async () => {
+    const response = await request(app)
+      .post("/doctor/exams/register")
+      .send(mockedExam);
+
+    expect(response.body).toHaveProperty("doctor_id");
+    expect(response.body).toHaveProperty("user_id");
+    expect(response.status).toBe(200);
+  });
+
+  test("POST /doctor/exams/register -  Should not be able to create exam", async () => {
+    const response = await request(app)
+      .post("/doctor/exams/register")
+      .send(mockedExamNotUser);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toEqual("User not found");
+    expect(response.status).toBe(400);
+  });
+
+  test("GET /doctor/exams/register -  Should be able to list all exams", async () => {
+    await request(app).post("/doctor").send(mockedDoctor);
+    const adminLoginResponse = await request(app)
+      .post("/login/doctor")
+      .send(mockedDoctorLogin);
+    const response = await request(app)
+      .get("/doctor/exams")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+    expect(response.body[0]).not.toHaveProperty("password");
+    expect(response.body[0]).not.toHaveProperty("updatedAt");
+    expect(response.body[0]).not.toHaveProperty("createdAt");
+    expect(response.status).toBe(200);
+  });
+
   afterAll(async () => {
       await connection.destroy();
     });
+
 });
