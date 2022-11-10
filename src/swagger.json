@@ -14,39 +14,17 @@
         "tags": ["Paciente"],
         "summary": "Criação de novo usuário - Paciente",
         "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - paciente.",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cpf",
-            "description": "CPF do usuário - somente números, sem caracters",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "isAdm",
-            "description": "Usuário é administrador?",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/newUserRecive"
+              }
+            }
           }
-        ],
+        },
+
         "responses": {
           "201": {
             "description": "Usuário cadastrado com sucesso!",
@@ -369,39 +347,16 @@
         "tags": ["Médico"],
         "summary": "Criação de novo usuário - Médico",
         "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - Médico.",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "CRM",
-            "description": "CRM do usuário - somente números, sem caracters",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "isAdm",
-            "description": "Usuário é administrador?",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/newDoctorRecive"
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Usuário cadastrado com sucesso!",
@@ -724,21 +679,16 @@
         "tags": ["Login"],
         "summary": "Login do usuário",
         "description": "Insira todos os parâmetros solicitados para realizar o login do usuário",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/login"
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Usuário logado com sucesso!",
@@ -781,30 +731,19 @@
     },
     "/schedules": {
       "post": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento de Exames"],
         "summary": "Agendamento de horario",
         "description": "Insira todos os parâmetros solicitados para realizar...",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "date",
-            "description": "Data do agendamento (mm/dd/yyyy)",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "hour",
-            "description": "Horario do agendamento (HR:MN)",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "doctorId",
-            "description": "ID do usuário Doctor (aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee)",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/schedulesRecive"
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Agendamento cadastrado com sucesso!",
@@ -812,7 +751,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/schedules"
+                  "$ref": "#/components/schemas/schedulesRsponse"
                 }
               }
             }
@@ -860,7 +799,7 @@
         }
       },
       "get": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento de Exames"],
         "summary": "Listagem de todos os agendamentos realizados",
         "description": "Insira todos os parâmetros solicitados para realizar...",
         "responses": {
@@ -957,7 +896,7 @@
     },
     "/schedules/id": {
       "get": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento de Exames"],
         "summary": "Listagem de agendamento de horario por ID",
         "responses": {
           "200": {
@@ -1006,7 +945,7 @@
         }
       },
       "patch": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento de Exames"],
         "summary": "Alteração de agendamento de horario por ID",
         "responses": {
           "200": {
@@ -1079,7 +1018,7 @@
         }
       },
       "delete": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento de Exames"],
         "summary": "Exclusão de agendamento de horario por ID",
         "responses": {
           "204": {
@@ -1149,6 +1088,32 @@
 
   "components": {
     "schemas": {
+      "newUserRecive": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
       "newUser": {
         "type": "object",
         "properties": {
@@ -1179,10 +1144,47 @@
           }
         }
       },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "token": {
         "type": "object",
         "properties": {
           "token": {
+            "type": "string"
+          }
+        }
+      },
+      "newDoctorRecive": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "crm": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
             "type": "string"
           }
         }
@@ -1262,6 +1264,68 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "schedulesRecive": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "tipo_exame": {
+            "type": "string"
+          },
+          "hora": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "resultado": {
+            "type": "string"
+          }
+        }
+      },
+      "schedulesRsponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "doctor": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "crm": {
+                "type": "string"
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "cpf": {
+                "type": "string"
+              }
+            }
+          },
+          "tipo_exame": {
+            "type": "string"
+          },
+          "hora": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "resultado": {
+            "type": "string"
           }
         }
       }
