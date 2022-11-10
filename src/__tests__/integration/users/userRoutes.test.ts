@@ -114,6 +114,25 @@ describe("/users", () => {
     expect(response.status).toBe(403);
   });
 
+  test("POST /login/users -  should be able to login with the user", async () => {
+    const response = await request(app)
+      .post("/login/users")
+      .send(mockedUserLogin);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("token");
+    expect(response.status).toBe(200);
+  });
+
+  test("POST /login -  should not be able to login with the user with incorrect password or email", async () => {
+    const response = await request(app).post("/login/users").send({
+      email: "leandrochillreff1@gmail.com",
+      password: "1234567",
+    });
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(403);
+  });
+
   test("DELETE /users/:id -  Should not be able to delete user without authentication", async () => {
     const adminLoginResponse = await request(app)
       .post("/login/users")
@@ -184,7 +203,7 @@ describe("/users", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("DELETE -  Should not be able to delete user with invalid id", async () => {
+  test("DELETE /users/:id -  Should not be able to delete user with invalid id", async () => {
     await request(app).post("/users").send(mockedAdmin);
 
     const adminLoginResponse = await request(app)

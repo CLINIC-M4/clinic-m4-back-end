@@ -1,3 +1,4 @@
+import { IDoctorRegister } from "../../../interfaces/doctor/doctor";
 import { IUserLogin, IUserRequest } from "../../../interfaces/users";
 
 export const mockedUser: IUserRequest = {
@@ -48,4 +49,30 @@ export const mockedAdmin: IUserRequest = {
 export const mockedAdminLogin: IUserLogin = {
   email: "leandroschillreff@gmail.com",
   password: "123456",
+};
+
+export const mockedDoctor: IDoctorRegister = {
+  name: "Dr. Enrico Freitas",
+  email: "enricofreitas1@gmail.com",
+  crm: "12321953-4/br",
+  password: "enrico123"
+}
+
+export const mockedDoctorNotName: IDoctorRegister = {
+  name: "",
+  email: "enricofreitas1@gmail.com",
+  crm: "12321953-4/br",
+  password: "enrico123",
+};
+
+export const mockedDoctorNotPassword: IDoctorRegister = {
+  name: "Dr. Enrico Freitasd",
+  email: "enricofreitas1@gmail.com",
+  crm: "12321953-4/br",
+  password: "",
+};
+
+export const mockedDoctorLogin: IUserLogin = {
+  email: "enricofreitas1@gmail.com",
+  password: "enrico123",
 };

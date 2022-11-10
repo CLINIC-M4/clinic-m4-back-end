@@ -14,14 +14,24 @@ import validateSerializerMiddleware from "../../middleware/validateSerializer.mi
 import verifyEmail from "../../middleware/verifyEmail.Middlewares";
 import verifyIsAdmMiddleware from "../../middleware/verifyIsAdm.middleware";
 import { createDoctorSerializer } from "../../serializers";
+import {
+  createExameSerializer,
+  updateExameSerializer,
+} from "../../serializers/exams/exams.serializer";
 
 const router = Router();
 
-router.post("", validateSerializerMiddleware(createDoctorSerializer), verifyEmail, registerDoctorController);
+router.post(
+  "",
+  validateSerializerMiddleware(createDoctorSerializer),
+  verifyEmail,
+  registerDoctorController
+);
 router.post(
   "/exams/register",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
+  validateSerializerMiddleware(createExameSerializer),
   registerExamController
 );
 
@@ -53,6 +63,7 @@ router.patch(
   "/exams/update/:id",
   ensureAuthMiddleware,
   verifyIsAdmMiddleware,
+  validateSerializerMiddleware(updateExameSerializer),
   updateExamsController
 );
 router.delete(
