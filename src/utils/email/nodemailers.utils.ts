@@ -17,14 +17,14 @@ const sendEmail = async ({
     port: 587,
     secure: false,
     auth: {
-      user: "andreleandro1501@hotmail.com",
-      pass: "clinicm4",
+      user: "brunoacev@live.com",
+      pass: "Mix010203",
     },
   });
 
   await transporter
     .sendMail({
-      from: "andreleandro1501@hotmail.com",
+      from: "brunoacev@live.com",
       to: to,
       text: text,
       subject: subject,

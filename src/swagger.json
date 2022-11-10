@@ -9,44 +9,77 @@
     "version": "Versão 1.0.0"
   },
   "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "Login do usuário",
+        "description": "Insira todos os parâmetros solicitados para realizar o login do usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário logado com sucesso!",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "token": "string"
+                },
+                "examples": {
+                  "sucess": {
+                    "value": {
+                      "token": "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6dHJ1ZSwiaWQiOiIxODcyYWViNS01Y2M0LTQ4MmEtYWE4My0yY2FkOTQ3M2I2MzUiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjY3ODUzMTkxLCJleHAiOjE2Njc5Mzk1OTF9.hippe9WYF9QApkDOx9W-ThkHLcxn-gSQ0afwzPO_ePI"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Dados com parâmetros invalidos!",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "schema": {
+                  "error": "string"
+                },
+                "examples": {
+                  "sucess": {
+                    "value": {
+                      "message": "Wrong Email/Password!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "post": {
-        "tags": ["Paciente"],
+        "tags": ["Novo usuário - Paciente"],
         "summary": "Criação de novo usuário - Paciente",
         "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - paciente.",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cpf",
-            "description": "CPF do usuário - somente números, sem caracters",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "isAdm",
-            "description": "Usuário é administrador?",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/newUserRecive"
+              }
+            }
           }
-        ],
+        },
+
         "responses": {
           "201": {
             "description": "Usuário cadastrado com sucesso!",
@@ -102,7 +135,7 @@
         }
       },
       "get": {
-        "tags": ["Paciente"],
+        "tags": ["Novo usuário - Paciente"],
         "summary": "Listagem de todos os usuários - Pacientes",
         "description": "Necessário validação de permissões!",
         "responses": {
@@ -154,7 +187,7 @@
     },
     "/users/id": {
       "patch": {
-        "tags": ["Paciente"],
+        "tags": ["Novo usuário - Paciente"],
         "summary": "Editar dados do usuário por ID",
         "description": "Necessário validação de login (token) e autenticação de usuário administrador!",
         "responses": {
@@ -259,7 +292,7 @@
         }
       },
       "delete": {
-        "tags": ["Paciente"],
+        "tags": ["Novo usuário - Paciente"],
         "summary": "Deletar usuário por ID",
         "description": "Necessário validação de login (token) e autenticação de usuário administrador!",
         "responses": {
@@ -366,42 +399,19 @@
     },
     "/doctor": {
       "post": {
-        "tags": ["Médico"],
+        "tags": ["Novo usuário - Médico"],
         "summary": "Criação de novo usuário - Médico",
         "description": "Insira todos os parâmetros solicitados para cadastrar um novo usuário - Médico.",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "CRM",
-            "description": "CRM do usuário - somente números, sem caracters",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "isAdm",
-            "description": "Usuário é administrador?",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/newDoctorRecive"
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Usuário cadastrado com sucesso!",
@@ -457,7 +467,7 @@
         }
       },
       "get": {
-        "tags": ["Médico"],
+        "tags": ["Novo usuário - Médico"],
         "summary": "Listagem de todos os usuários - Médicos",
         "description": "Necessário validação de permissões!",
         "responses": {
@@ -509,7 +519,7 @@
     },
     "/doctor/id": {
       "patch": {
-        "tags": ["Médico"],
+        "tags": ["Novo usuário - Médico"],
         "summary": "Editar dados do usuário por ID",
         "description": "Necessário validação de login (token) e autenticação de usuário administrador!",
         "responses": {
@@ -614,7 +624,7 @@
         }
       },
       "delete": {
-        "tags": ["Médico"],
+        "tags": ["Novo usuário - Médico"],
         "summary": "Deletar usuário por ID",
         "description": "Necessário validação de login (token) e autenticação de usuário administrador!",
         "responses": {
@@ -719,92 +729,32 @@
         }
       }
     },
-    "/login": {
-      "post": {
-        "tags": ["Login"],
-        "summary": "Login do usuário",
-        "description": "Insira todos os parâmetros solicitados para realizar o login do usuário",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "email",
-            "description": "Email do usuário",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuário logado com sucesso!",
-            "content": {
-              "application/json": {
-                "type": "object",
-                "schema": {
-                  "token": "string"
-                },
-                "examples": {
-                  "sucess": {
-                    "value": {
-                      "token": "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6dHJ1ZSwiaWQiOiIxODcyYWViNS01Y2M0LTQ4MmEtYWE4My0yY2FkOTQ3M2I2MzUiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjY3ODUzMTkxLCJleHAiOjE2Njc5Mzk1OTF9.hippe9WYF9QApkDOx9W-ThkHLcxn-gSQ0afwzPO_ePI"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Dados com parâmetros invalidos!",
-            "content": {
-              "application/json": {
-                "type": "object",
-                "schema": {
-                  "error": "string"
-                },
-                "examples": {
-                  "sucess": {
-                    "value": {
-                      "message": "Wrong Email/Password!"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
     "/schedules": {
       "post": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento"],
         "summary": "Agendamento de horario",
         "description": "Insira todos os parâmetros solicitados para realizar...",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "date",
-            "description": "Data do agendamento (mm/dd/yyyy)",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "hour",
-            "description": "Horario do agendamento (HR:MN)",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "doctorId",
-            "description": "ID do usuário Doctor (aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee)",
-            "required": true,
-            "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "hour": {
+                    "type": "string"
+                  },
+                  "doctorId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Agendamento cadastrado com sucesso!",
@@ -812,7 +762,18 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/schedules"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "message": {
+                    "value": {
+                      "message": "Scheduling successful!"
+                    }
+                  }
                 }
               }
             }
@@ -860,7 +821,7 @@
         }
       },
       "get": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento"],
         "summary": "Listagem de todos os agendamentos realizados",
         "description": "Insira todos os parâmetros solicitados para realizar...",
         "responses": {
@@ -957,7 +918,7 @@
     },
     "/schedules/id": {
       "get": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento"],
         "summary": "Listagem de agendamento de horario por ID",
         "responses": {
           "200": {
@@ -1006,7 +967,7 @@
         }
       },
       "patch": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento"],
         "summary": "Alteração de agendamento de horario por ID",
         "responses": {
           "200": {
@@ -1079,7 +1040,7 @@
         }
       },
       "delete": {
-        "tags": ["Schedules"],
+        "tags": ["Agendamento"],
         "summary": "Exclusão de agendamento de horario por ID",
         "responses": {
           "204": {
@@ -1144,11 +1105,250 @@
           }
         }
       }
+    },
+    "doctor/exams/register": {
+      "post": {
+        "tags": ["Exames"],
+        "description": "Registro de exames solicitados pelo usuário Doctor",
+        "summary": "Registro de exame do usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/examsRecive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna um objeto com todas as informações registradas no exame!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/examsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna um objeto com uma mensagem de ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "invalid parameters"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "doctor/exams": {
+      "get": {
+        "tags": ["Exames"],
+        "description": "Listagem de todos os exames registrados pela API",
+        "summary": "Listagem de Todos os Exames",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os exames registrados"
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "doctor/exams/id": {
+      "get": {
+        "tags": ["Exames"],
+        "description": "Listagem de exame pelo ID",
+        "summary": "Listagem de exame pelo ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os exames registrados pelo ID"
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exams/update/id": {
+      "patch": {
+        "tags": ["Exames"],
+        "summary": "Alteração de exame pelo ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os objetos alterados pelo ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/examsRecive"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
 
   "components": {
     "schemas": {
+      "newUserRecive": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
       "newUser": {
         "type": "object",
         "properties": {
@@ -1179,10 +1379,47 @@
           }
         }
       },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "token": {
         "type": "object",
         "properties": {
           "token": {
+            "type": "string"
+          }
+        }
+      },
+      "newDoctorRecive": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "crm": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
             "type": "string"
           }
         }
@@ -1262,6 +1499,83 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "scheduleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "examples": {
+          "message": {
+            "value": {
+              "message": "Agendamento realizado com sucesso!"
+            }
+          }
+        }
+      },
+      "examsRecive": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "tipo_exame": {
+            "type": "string"
+          },
+          "hora": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "resultado": {
+            "type": "string"
+          }
+        }
+      },
+      "examsResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "doctor": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "crm": {
+                "type": "string"
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "cpf": {
+                "type": "string"
+              }
+            }
+          },
+          "tipo_exame": {
+            "type": "string"
+          },
+          "hora": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "resultado": {
+            "type": "string"
           }
         }
       }
