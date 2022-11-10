@@ -778,8 +778,375 @@
           }
         }
       }
+    },
+    "/schedules": {
+      "post": {
+        "tags": ["Schedules"],
+        "summary": "Agendamento de horario",
+        "description": "Insira todos os parâmetros solicitados para realizar...",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "date",
+            "description": "Data do agendamento (mm/dd/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hour",
+            "description": "Horario do agendamento (HR:MN)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "doctorId",
+            "description": "ID do usuário Doctor (aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Agendamento cadastrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/schedules"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados com parâmetros invalidos!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Date is required field!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Schedules"],
+        "summary": "Listagem de todos os agendamentos realizados",
+        "description": "Insira todos os parâmetros solicitados para realizar...",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os agendamentos cadastrados!"
+          },
+          "400": {
+            "description": "Retorna um array de objetos com possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "deleted": "This account was deleted",
+                      "registed": "Already scheduled time and date",
+                      "bussy": "Cannot visit during business hours",
+                      "wrongFormat": "Date in wrong format, correct format is mm/dd/yyyy",
+                      "appointments": "Appointments can only be made on weekdays"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna um array de objetos com possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "invalid": "User id invalid",
+                      "invalidDoctor": "Doctor id Invalid"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schedules/id": {
+      "get": {
+        "tags": ["Schedules"],
+        "summary": "Listagem de agendamento de horario por ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com os agendamentos cadastrados pelo ID!"
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna um objetos de error!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedules not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Schedules"],
+        "summary": "Alteração de agendamento de horario por ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com os agendamentos alterados pelo ID!"
+          },
+          "400": {
+            "description": "Retorna um array de objetos com possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "informations": "Missing body informations",
+                      "registed": "Already scheduled time and date",
+                      "bussy": "Cannot visit during business hours",
+                      "wrongFormat": "Date in wrong format, correct format is mm/dd/yyyy",
+                      "appointments": "Appointments can only be made on weekdays"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna um objetos de error!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedules not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Schedules"],
+        "summary": "Exclusão de agendamento de horario por ID",
+        "responses": {
+          "204": {
+            "description": "Retorna um objeto com uma mensagem de exclusão pelo ID!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "sucess": {
+                    "value": {
+                      "sucess": "Delete schedule"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna um objeto com uma mensagem de possiveis erros!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Schedule not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
+
   "components": {
     "schemas": {
       "newUser": {
@@ -854,6 +1221,48 @@
         "type": "object",
         "properties": {
           "message": "string"
+        }
+      },
+      "schedules": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "hour": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "cpf": {
+                "type": "string"
+              }
+            }
+          },
+          "doctor": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "crm": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     }

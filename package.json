@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
-    "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose false",
     "start": "node dist/src/server.js"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
+    "node": "^19.0.1",
     "nodemailer": "^6.8.0",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",

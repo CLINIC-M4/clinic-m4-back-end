@@ -2,14 +2,14 @@ import AppDataSource from "../../data-source";
 import { Schedule } from "../../entities/schedule.entity";
 import { appError } from "../../errors/appError";
 import {
-  IScheduleRequest,
   IScheduleResponse,
+  IScheduleRequest,
 } from "../../interfaces/schedules";
 
 const updateScheduleService = async (
   { date, hour }: IScheduleRequest,
   id: string
-) => {
+): Promise<IScheduleResponse> => {
   if (!date || !hour) {
     throw new appError(400, "Missing body informations");
   }
@@ -30,8 +30,15 @@ const updateScheduleService = async (
   }
 
   const businessHours = hour.split(":");
-  if (Number(businessHours[0]) > 18 || Number(businessHours[0]) < 8) {
+  if (
+    Number(businessHours[0]) > 18 ||
+    Number(businessHours[0]) < 8 ||
+    (Number(businessHours[0]) === 18 && Number(businessHours[1]) !== 0)
+  ) {
     throw new appError(400, "Cannot visit during business hours");
+  }
+  if (Number(businessHours[1]) < 0 || Number(businessHours[1]) > 60) {
+    throw new appError(400, "Minutes invalid");
   }
 
   const data = new Date(date);
@@ -53,26 +60,23 @@ const updateScheduleService = async (
     hour,
   });
 
-  const schedule = await scheduleRepository.findOneBy({ id });
-  if (schedule) {
-    const responseSchedule = {
-      id: schedule.id,
-      date: schedule.date,
-      hour: schedule.hour,
-      user: {
-        name: schedule.user.name,
-        email: schedule.user.email,
-        cpf: schedule.user.cpf,
-      },
-      doctor: {
-        name: schedule.doctor.name,
-        email: schedule.doctor.email,
-        crm: schedule.doctor.crm,
-      },
-    };
+  const schedule = await scheduleRepository.findOne({
+    select: {
+      id: true,
+      date: true,
+      hour: true,
+      user: { name: true, email: true, cpf: true },
+      doctor: { name: true, email: true, crm: true },
+    },
+    relations: { user: true, doctor: true },
+    where: { id: id },
+  });
 
-    return responseSchedule;
+  if (!schedule) {
+    throw new appError(400, "Error update schedule");
   }
+
+  return schedule;
 };
 
 export default updateScheduleService;

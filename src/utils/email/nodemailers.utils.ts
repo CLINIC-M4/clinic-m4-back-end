@@ -17,14 +17,14 @@ const sendEmail = async ({
     port: 587,
     secure: false,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: "andreleandro1501@hotmail.com",
+      pass: "clinicm4",
     },
   });
 
   await transporter
     .sendMail({
-      from: process.env.SMTP_USER,
+      from: "andreleandro1501@hotmail.com",
       to: to,
       text: text,
       subject: subject,
@@ -55,9 +55,7 @@ const sendEmail = async ({
           "END:VCALENDAR",
       },
     })
-    .then(() => {
-      console.log("Email send with success");
-    })
+    .then(() => {})
     .catch((err) => {
       console.log(err);
       throw new Error("Error sending email, try again later");

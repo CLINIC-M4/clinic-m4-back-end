@@ -10,7 +10,7 @@ import {
   mockedUserNotName,
   mockedUserCPFInvalid,
   mockedUserNotPassword,
-} from "../../mocks";
+} from "../../mocks/users";
 
 describe("/users", () => {
   let connection: DataSource;
@@ -72,8 +72,10 @@ describe("/users", () => {
     expect(response.status).toBe(400);
   });
 
-  test("POST /users -  Should not be able to create a user that not exists name in body", async () => {
-    const response = await request(app).post("/users").send(mockedUserNotPassword);
+  test("POST /users -  Should not be able to create a user that not exists password in body", async () => {
+    const response = await request(app)
+      .post("/users")
+      .send(mockedUserNotPassword);
 
     expect(response.body).toHaveProperty("message");
     expect(response.body.message).toEqual("password is a required field");
@@ -107,6 +109,25 @@ describe("/users", () => {
     const response = await request(app)
       .get("/users")
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(403);
+  });
+
+  test("POST /login/users -  should be able to login with the user", async () => {
+    const response = await request(app)
+      .post("/login/users")
+      .send(mockedUserLogin);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("token");
+    expect(response.status).toBe(200);
+  });
+
+  test("POST /login -  should not be able to login with the user with incorrect password or email", async () => {
+    const response = await request(app).post("/login/users").send({
+      email: "leandrochillreff1@gmail.com",
+      password: "1234567",
+    });
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(403);
@@ -182,7 +203,7 @@ describe("/users", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("DELETE -  Should not be able to delete user with invalid id", async () => {
+  test("DELETE /users/:id -  Should not be able to delete user with invalid id", async () => {
     await request(app).post("/users").send(mockedAdmin);
 
     const adminLoginResponse = await request(app)
@@ -346,5 +367,30 @@ describe("/users", () => {
     expect(response.status).toBe(200);
     expect(userUpdated.body[0].name).toEqual("Jose");
     expect(userUpdated.body[0]).not.toHaveProperty("password");
+  });
+
+  test("GET /users/exams -  Should be able to list exams", async () => {
+    const userLoginResponse = await request(app)
+      .post("/login/users")
+      .send(mockedUserLogin);
+    const response = await request(app)
+      .get("/users/exams")
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body).not.toHaveProperty("password");
+    expect(response.body).toHaveProperty("resultado");
+  });
+
+  test("GET /users/exams -  Should not be able to list exams", async () => {
+    const newValues = { token: "invalidToken" };
+    const LoginResponse = await request(app)
+      .post("/users/exams")
+      .send(mockedUserLogin);
+    const response = await request(app)
+      .get("/users/exams")
+      .set("Authorization", `Bearer ${newValues}`);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
   });
 });

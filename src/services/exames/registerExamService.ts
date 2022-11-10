@@ -9,33 +9,51 @@ import { IExams } from "../../interfaces/exames/exames";
 const registerExamService = async (
   { user_id, tipo_exame, data, hora, resultado }: IExams,
   id: string
-): Promise<IExams> => {
+) => {
   const examRepository = AppDataSource.getRepository(ExamesUserDoctor);
 
   const doctorRepository = AppDataSource.getRepository(Doctor);
   const doctor = await doctorRepository.findOneBy({ id });
-
+  if (!doctor) {
+    throw new appError(400, "Doctor not found");
+  }
   const userRepository = AppDataSource.getRepository(User);
-  const usuario = await userRepository.findOneBy(user_id.user_id);
 
-  if (usuario == null || usuario == undefined || !usuario) {
+  const user = await userRepository.findOneBy({ id: user_id });
+
+  if (!user) {
     throw new appError(400, "User not found");
   }
+<<<<<<< HEAD
+=======
 
-  const newExame = examRepository.create({
-    doctor_id: {
-      name: doctor!.name,
-      crm: doctor!.crm,
-    },
-    user_id: {
-      name: usuario!.name,
-      cpf: usuario!.cpf,
-    },
+  const exame = examRepository.create({
+    doctor,
+    user,
     tipo_exame,
     data,
     hora,
     resultado,
   });
+>>>>>>> 1f84aff0c4b4275e389188b82a78f390d92d078c
+
+  const exameSave = await examRepository.save(exame);
+
+  const newExame = {
+    id: exameSave.id,
+    doctor: {
+      name: doctor.name,
+      crm: doctor.crm,
+    },
+    user: {
+      name: user.name,
+      cpf: user.cpf,
+    },
+    tipo_exame,
+    data,
+    hora,
+    resultado,
+  };
 
   return newExame;
 };
