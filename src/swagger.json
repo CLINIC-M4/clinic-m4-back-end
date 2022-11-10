@@ -674,6 +674,219 @@
         }
       }
     },
+    "doctor/exams/register": {
+      "post": {
+        "tags": ["Exames"],
+        "description": "Registro de exames solicitados pelo usuário Doctor",
+        "summary": "Registro de exame do usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/examsRecive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna um objeto com todas as informações registradas no exame!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/examsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna um objeto com uma mensagem de ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "invalid parameters"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "doctor/exams": {
+      "get": {
+        "tags": ["Exames"],
+        "description": "Listagem de todos os exames registrados pela API",
+        "summary": "Listagem de Todos os Exames",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os exames registrados"
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "doctor/exams/id": {
+      "get": {
+        "tags": ["Exames"],
+        "description": "Listagem de exame pelo ID",
+        "summary": "Listagem de exame pelo ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os exames registrados pelo ID"
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exams/update/id": {
+      "patch": {
+        "tags": ["Exames"],
+        "summary": "Alteração de exame pelo ID",
+        "responses": {
+          "200": {
+            "description": "Retorna um array de objetos com todos os objetos alterados pelo ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/examsRecive"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Retorna mensagem informando usuário sem autenticação!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "Missing authorization Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna mensagem informando usuário sem permissão!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "parameters": {
+                    "message": "string"
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "message": "You do not have permission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "tags": ["Login"],
@@ -751,7 +964,18 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/schedulesRsponse"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "message": {
+                    "value": {
+                      "message": "Scheduling successful!"
+                    }
+                  }
                 }
               }
             }
@@ -1267,7 +1491,22 @@
           }
         }
       },
-      "schedulesRecive": {
+      "scheduleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "examples": {
+          "message": {
+            "value": {
+              "message": "Agendamento realizado com sucesso!"
+            }
+          }
+        }
+      },
+      "examsRecive": {
         "type": "object",
         "properties": {
           "user_id": {
@@ -1287,7 +1526,7 @@
           }
         }
       },
-      "schedulesRsponse": {
+      "examsResponse": {
         "type": "object",
         "properties": {
           "id": {
